@@ -1,0 +1,58 @@
+$mainBody: #dedbdb;
+$mainColor: #0066ff;
+$fontColor: #0d1520;
+
+.sideBar {
+    width: 500px;
+    min-height: 100vh;
+    // background-color: #230165;
+    background: linear-gradient(45deg, $mainColor, #011eea);
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    padding: 20px 20px 40px;
+    // border-bottom: 1px solid rgb(219, 219, 219);
+}
+.image {
+    flex-basis: 20%;
+    margin-right: 20px;
+}
+.userName {
+    font-weight: bold;
+    color: #fff;
+}
+
+.chats {
+}
+.title {
+    font-size: 1.1rem;
+    color: #fff;
+    padding-left: 25px;
+    margin-bottom: 10px;
+}
+
+.link {
+    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.4s ease-in-out;
+
+    &:hover {
+        background-color: #011eea44;
+    }
+}
+.activeLink {
+    background-color: #0115a091;
+    &:hover {
+        background-color: #0115a091;
+    }
+}
+.linkImage {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+}

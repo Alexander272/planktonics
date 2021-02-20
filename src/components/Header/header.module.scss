@@ -1,0 +1,12 @@
+$borderColor: #828a99;
+$titleColor: #065bda;
+
+.header {
+    background-color: #fff;
+    padding: 20px 50px;
+    border-bottom: 1px solid $borderColor;
+}
+.title {
+    font-size: 1.3rem;
+    color: $titleColor;
+}

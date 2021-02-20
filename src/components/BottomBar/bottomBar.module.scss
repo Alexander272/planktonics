@@ -1,0 +1,46 @@
+$svgColor: #828a99;
+$svgHoverColor: #0066ff;
+
+.bottomBar {
+    padding: 20px 50px;
+    background-color: #fff;
+    border-top: 1px solid $svgColor;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.textarea {
+    flex-basis: 85%;
+    padding: 7px 15px;
+    margin-right: 20px;
+    outline: none;
+    border: 1px solid $svgColor;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    resize: none;
+}
+.error {
+    border-color: red;
+}
+
+.emoji {
+}
+.send {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+        .svg {
+            fill: $svgHoverColor;
+        }
+    }
+}
+.svg {
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+    fill: $svgColor;
+}

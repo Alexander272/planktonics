@@ -1,0 +1,15 @@
+{
+    "users": [
+        {
+            "email": "main@gmail.com",
+            "password": "123456",
+            "name": "User1",
+            "avatar": "https://www.pinclipart.com/picdir/big/164-1640714_user-symbol-interface-contact-phone-set-add-sign.png"
+        },
+        {
+            "email": "test@gmail.com",
+            "password": "qwerty",
+            "name": "User2"
+        }
+    ]
+}

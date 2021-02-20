@@ -1,0 +1,35 @@
+{
+    "messages": [
+        {
+            "author": "User2",
+            "message": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga, temporibus est facere nobis delectus in placeat debitis praesentium."
+        },
+        {
+            "author": "User2",
+            "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta quod aliquam perspiciatis reiciendis? Iste, consectetur?"
+        },
+        {
+            "author": "User3",
+            "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, quas.",
+            "avatar": "https://img2.pngio.com/user-profile-computer-icons-user-interface-mystique-transparent-user-avatars-png-512_512.png"
+        },
+        {
+            "author": "User2",
+            "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta quod aliquam perspiciatis reiciendis? Iste, consectetur?"
+        },
+        {
+            "author": "User3",
+            "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt odio unde, distinctio doloribus repudiandae aliquid minus! Quia nesciunt possimus repudiandae nemo sequi? Labore nostrum in ex dolorem deleniti suscipit pariatur natus nisi!",
+            "avatar": "https://img2.pngio.com/user-profile-computer-icons-user-interface-mystique-transparent-user-avatars-png-512_512.png"
+        },
+        {
+            "author": "User1",
+            "message": "Lorem ipsum dolor sit.",
+            "avatar": "https://www.pinclipart.com/picdir/big/164-1640714_user-symbol-interface-contact-phone-set-add-sign.png"
+        },
+        {
+            "author": "User1",
+            "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis explicabo voluptatibus beatae deleniti? Nostrum, dignissimos?"
+        }     
+    ]
+}
