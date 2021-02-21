@@ -10,7 +10,11 @@ import {
 import { userSelectAvatar, userSelectName } from '../../store/user/userSlice'
 import classes from './bottomBar.module.scss'
 
+const emoji = '🤣,😀,😃,😁,😅,😆,😂,😉,😊,🙂,🙃,😇,😗,🤗,😋,🤩,😟,😰,😓'
+
 export const BottomBar = () => {
+    console.log(emoji.split(','))
+
     const [message, setMessage] = useState('')
     const [validError, setValidError] = useState(false)
     const username = useSelector(userSelectName)
@@ -29,6 +33,10 @@ export const BottomBar = () => {
 
     const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(event.target.value)
+    }
+    const setHandler = (event: React.MouseEvent<HTMLParagraphElement>) => {
+        const { index } = (event.target as HTMLParagraphElement).dataset
+        if (index) setMessage(prev => prev + emoji.split(',')[+index])
     }
 
     const sendHandler = () => {
@@ -60,7 +68,23 @@ export const BottomBar = () => {
                 onChange={changeHandler}
                 placeholder="Сообщение"
             />
-            <div className={classes.emoji}></div>
+            <div className={classes.emojiContainer}>
+                <p className={classes.emojiTitle}>😀</p>
+                <div className={classes.emoji}>
+                    {emoji.split(',').map((item, index) => {
+                        return (
+                            <p
+                                className={classes.itemEmoji}
+                                data-index={index}
+                                key={index}
+                                onClick={setHandler}
+                            >
+                                {item}
+                            </p>
+                        )
+                    })}
+                </div>
+            </div>
             <div className={classes.send} onClick={sendHandler}>
                 <svg
                     className={classes.svg}

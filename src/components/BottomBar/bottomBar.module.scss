@@ -24,8 +24,6 @@ $svgHoverColor: #0066ff;
     border-color: red;
 }
 
-.emoji {
-}
 .send {
     width: 40px;
     height: 40px;
@@ -43,4 +41,41 @@ $svgHoverColor: #0066ff;
     pointer-events: none;
     transition: all 0.3s ease-in-out;
     fill: $svgColor;
+}
+
+.emojiContainer {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    &:hover {
+        .emoji {
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
+}
+.emojiTitle {
+    pointer-events: none;
+}
+.emoji {
+    background-color: #fff;
+    border: 1px solid $svgColor;
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    position: absolute;
+    width: 120px;
+    bottom: 40px;
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+}
+.itemEmoji {
+    padding: 5px;
 }
