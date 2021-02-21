@@ -13,8 +13,6 @@ import classes from './bottomBar.module.scss'
 const emoji = '🤣,😀,😃,😁,😅,😆,😂,😉,😊,🙂,🙃,😇,😗,🤗,😋,🤩,😟,😰,😓'
 
 export const BottomBar = () => {
-    console.log(emoji.split(','))
-
     const [message, setMessage] = useState('')
     const [validError, setValidError] = useState(false)
     const username = useSelector(userSelectName)
