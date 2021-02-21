@@ -1,6 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addMessage, chatSelectChatName } from '../../store/chat/chatSlice'
+import {
+    addMessage,
+    chatSelectChatName,
+    chatSelectEditId,
+    chatSelectMessage,
+    editMessage,
+} from '../../store/chat/chatSlice'
 import { userSelectAvatar, userSelectName } from '../../store/user/userSlice'
 import classes from './bottomBar.module.scss'
 
@@ -9,8 +15,17 @@ export const BottomBar = () => {
     const [validError, setValidError] = useState(false)
     const username = useSelector(userSelectName)
     const avatar = useSelector(userSelectAvatar)
+    const messages = useSelector(chatSelectMessage)
     const chatName = useSelector(chatSelectChatName)
+    const editId = useSelector(chatSelectEditId)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (editId) {
+            const index = messages.findIndex(message => message.id === editId)
+            setMessage(messages[index].message)
+        }
+    }, [editId, messages])
 
     const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(event.target.value)
@@ -22,36 +37,17 @@ export const BottomBar = () => {
             return
         }
         setValidError(false)
-        dispatch(
-            addMessage({
-                author: username,
-                message,
-                avatar,
-            })
-        )
-        if (chatName) {
-            const data = localStorage.getItem(chatName)
-            if (data) {
-                const messages = JSON.parse(data)
-                messages.push({
+        if (editId) {
+            dispatch(editMessage(editId, chatName, message))
+        } else
+            dispatch(
+                addMessage(chatName, {
+                    id: Date.now().toString(),
                     author: username,
                     message,
                     avatar,
                 })
-                localStorage.setItem(chatName, JSON.stringify(messages))
-            } else {
-                localStorage.setItem(
-                    chatName,
-                    JSON.stringify([
-                        {
-                            author: username,
-                            message,
-                            avatar,
-                        },
-                    ])
-                )
-            }
-        }
+            )
         setMessage('')
     }
 

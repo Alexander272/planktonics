@@ -63,10 +63,48 @@
     background-color: #2f60fd;
     padding: 9px 15px;
     border-radius: 0 12px 12px 12px;
+    position: relative;
+    z-index: 5;
+    &:hover {
+        .btns {
+            opacity: 1;
+        }
+    }
 }
 .textContainerRounded {
     border-radius: 12px;
 }
 .text {
+    color: #fff;
+}
+
+.btns {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    padding-right: 10px;
+    width: 70px;
+    left: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+.btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.btnEdit {
+    background-color: #0066ff;
+    color: #fff;
+}
+.btnDelete {
+    background-color: red;
     color: #fff;
 }

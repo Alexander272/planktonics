@@ -5,6 +5,7 @@ import mockMessage from '../../data/messageMock.json'
 import mockPublicMessage from '../../data/messagePublicMock.json'
 
 type ChatState = {
+    editId: null | string
     chatName: null | string
     message: Message[]
     loading: boolean
@@ -12,6 +13,7 @@ type ChatState = {
 }
 
 const initialState: ChatState = {
+    editId: null,
     chatName: null,
     message: [],
     loading: false,
@@ -34,13 +36,34 @@ export const chatSlice = createSlice({
             state.error = action.payload
             state.loading = false
         },
-        addMessage: (state, action: PayloadAction<Message>) => {
+        addMessageSuccess: (state, action: PayloadAction<Message>) => {
             state.message.push(action.payload)
+        },
+        removeMessageSuccess: (state, action: PayloadAction<string>) => {
+            state.message = state.message.filter(message => message.id !== action.payload)
+        },
+        editMessageStart: (state, action: PayloadAction<string>) => {
+            state.editId = action.payload
+        },
+        editMessageSuccess: (state, action: PayloadAction<{ id: string; text: string }>) => {
+            state.message = state.message.map(message => {
+                if (message.id === action.payload.id) message.message = action.payload.text
+                return message
+            })
+            state.editId = null
         },
     },
 })
 
-export const { receiving, receivingSuccess, receivingFailure, addMessage } = chatSlice.actions
+export const {
+    receiving,
+    receivingSuccess,
+    receivingFailure,
+    addMessageSuccess,
+    removeMessageSuccess,
+    editMessageStart,
+    editMessageSuccess,
+} = chatSlice.actions
 
 export const getChat = (slug: string): AppThunk => dispatch => {
     try {
@@ -61,6 +84,74 @@ export const getChat = (slug: string): AppThunk => dispatch => {
     }
 }
 
+export const addMessage = (chatName: string | null, message: Message): AppThunk => dispatch => {
+    try {
+        if (chatName) {
+            const data = localStorage.getItem(chatName)
+            if (data) {
+                const messages = JSON.parse(data)
+                messages.push({
+                    id: message.id,
+                    author: message.author,
+                    message: message.message,
+                    avatar: message.avatar,
+                })
+                localStorage.setItem(chatName, JSON.stringify(messages))
+            } else {
+                localStorage.setItem(
+                    chatName,
+                    JSON.stringify([
+                        {
+                            id: message.id,
+                            author: message.author,
+                            message: message.message,
+                            avatar: message.avatar,
+                        },
+                    ])
+                )
+            }
+        }
+        dispatch(addMessageSuccess(message))
+    } catch (error) {}
+}
+
+export const removeMessage = (id: string, chatName: string | null): AppThunk => dispatch => {
+    try {
+        if (chatName) {
+            const data = localStorage.getItem(chatName)
+            if (data) {
+                const messages = JSON.parse(data)
+                const newMessages = messages.filter((message: Message) => message.id !== id)
+                if (newMessages.length) localStorage.setItem(chatName, JSON.stringify(newMessages))
+                else localStorage.removeItem(chatName)
+            }
+        }
+        dispatch(removeMessageSuccess(id))
+    } catch (error) {}
+}
+
+export const editMessage = (
+    id: string,
+    chatName: string | null,
+    text: string
+): AppThunk => dispatch => {
+    try {
+        if (chatName) {
+            const data = localStorage.getItem(chatName)
+            if (data) {
+                const messages = JSON.parse(data)
+                const newMessages = messages.map((message: Message) => {
+                    if (message.id === id) message.message = text
+                    return message
+                })
+                localStorage.setItem(chatName, JSON.stringify(newMessages))
+            }
+        }
+        dispatch(editMessageSuccess({ id, text }))
+    } catch (error) {}
+}
+
+export const chatSelectEditId = (state: RootState) => state.chat.editId
 export const chatSelectChatName = (state: RootState) => state.chat.chatName
 export const chatSelectMessage = (state: RootState) => state.chat.message
 export const chatSelectLoading = (state: RootState) => state.chat.loading

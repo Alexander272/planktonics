@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { chatSelectChatName, editMessageStart, removeMessage } from '../../store/chat/chatSlice'
 import { userSelectName } from '../../store/user/userSlice'
 import { Message } from '../../types/message'
 import classes from './chat.module.scss'
@@ -9,7 +10,9 @@ type Props = {
 }
 
 export const Chat: React.FC<Props> = ({ messages }) => {
+    const dispatch = useDispatch()
     const username = useSelector(userSelectName)
+    const chatName = useSelector(chatSelectChatName)
     const messRef = useRef(null)
 
     useEffect(() => {
@@ -19,6 +22,15 @@ export const Chat: React.FC<Props> = ({ messages }) => {
             current.scrollTop = current.scrollHeight
         }
     }, [messages])
+
+    const removeHandler = (event: React.MouseEvent<HTMLParagraphElement>) => {
+        const { id } = (event.target as HTMLParagraphElement).dataset
+        if (id) dispatch(removeMessage(id, chatName))
+    }
+    const editHandler = (event: React.MouseEvent<HTMLParagraphElement>) => {
+        const { id } = (event.target as HTMLParagraphElement).dataset
+        if (id) dispatch(editMessageStart(id))
+    }
 
     const createMessage = (message: Message) => {
         return (
@@ -37,6 +49,24 @@ export const Chat: React.FC<Props> = ({ messages }) => {
                     <p className={classes.author}>{message.author}</p>
                     <div className={classes.textContainer}>
                         <p className={classes.text}>{message.message}</p>
+                        {username === message.author && (
+                            <div className={classes.btns}>
+                                <p
+                                    data-id={message.id}
+                                    className={[classes.btn, classes.btnEdit].join(' ')}
+                                    onClick={editHandler}
+                                >
+                                    &#9998;
+                                </p>
+                                <p
+                                    data-id={message.id}
+                                    className={[classes.btn, classes.btnDelete].join(' ')}
+                                    onClick={removeHandler}
+                                >
+                                    &times;
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </>
@@ -48,7 +78,7 @@ export const Chat: React.FC<Props> = ({ messages }) => {
             {messages.map((message, index) => {
                 return (
                     <div
-                        key={index}
+                        key={message.id}
                         className={
                             username === message.author ? classes.myMessage : classes.message
                         }
@@ -70,6 +100,29 @@ export const Chat: React.FC<Props> = ({ messages }) => {
                                         ].join(' ')}
                                     >
                                         <p className={classes.text}>{message.message}</p>
+                                        {username === message.author && (
+                                            <div className={classes.btns}>
+                                                <p
+                                                    data-id={message.id}
+                                                    className={[classes.btn, classes.btnEdit].join(
+                                                        ' '
+                                                    )}
+                                                    onClick={editHandler}
+                                                >
+                                                    &#9998;
+                                                </p>
+                                                <p
+                                                    data-id={message.id}
+                                                    className={[
+                                                        classes.btn,
+                                                        classes.btnDelete,
+                                                    ].join(' ')}
+                                                    onClick={removeHandler}
+                                                >
+                                                    &times;
+                                                </p>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )
